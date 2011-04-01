@@ -1,0 +1,7 @@
+tp4
+*.o
+*~
+*.log
+*.aux
+rapport.pdf
+*.od*
