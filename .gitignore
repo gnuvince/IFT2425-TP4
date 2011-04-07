@@ -5,3 +5,5 @@ tp4
 *.aux
 rapport.pdf
 *.od*
+*.pgm
+*.out
