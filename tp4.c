@@ -1,3 +1,4 @@
+#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -9,7 +10,6 @@
 
 
 #define NAME_IMG_OUT "VincentEric.pgm"
-#define NBCHAR 200
 
 #define WIDTH  512
 #define LENGTH 512
@@ -107,7 +107,7 @@ void SaveImagePgm(char* name,double** mat,int length,int width)
 /*-------------------------------------------------------------*/
 void SetPointBlack(double** Mat,int lgth,int wdth,int row,int col)
 {
-    Mat[MID_LGTH-row][col+MID_WDTH]=0.0;
+    Mat[lgth-row][col+wdth]=0.0;
 }
 
 
@@ -139,11 +139,10 @@ int main(int argc, char *argv[]) {
     double xn = 0.0;
     double **matrice = fmatrix_allocate_2d(WIDTH, LENGTH);
 
-    for (int i = 0; i < WIDTH; ++i) {
-        for (int j = 0; j < LENGTH; ++j) {
+    for (int i = 0; i < WIDTH; ++i)
+        for (int j = 0; j < WIDTH; ++j)
             matrice[i][j] = WHITE;
-        }
-    }
+
 
     while (tn < END) {
         k[0][0] = H * f1(tn, yn, xn);
@@ -183,9 +182,7 @@ int main(int argc, char *argv[]) {
         double yn1 = yn + k[1][0]*16/135 + k[1][2]*6656/12825 + k[1][3]*28561/56430 - k[1][4]*9/50 + k[1][5]*2/55;
         double xn1 = xn + k[0][0]*16/135 + k[0][2]*6656/12825 + k[0][3]*28561/56430 - k[0][4]*9/50 + k[0][5]*2/55;
 
-        SetPointBlack(matrice, LENGTH, WIDTH, yn1, xn1);
-
-        printf("%g %g\n", yn1, xn);
+        SetPointBlack(matrice, MID_LGTH, MID_WDTH, (int)(xn1*MID_WDTH) % MID_WDTH, (int)(yn1*MID_LGTH) % MID_LGTH);
 
         yn = yn1;
         xn = xn1;
